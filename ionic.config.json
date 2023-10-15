@@ -1,0 +1,7 @@
+{
+  "name": "Studio5-Mobile-App-New",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

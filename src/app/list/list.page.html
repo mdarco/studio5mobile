@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Plesači
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="resetFilter()">
+        <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="showFilterDialog()">
+        <ion-icon slot="icon-only" name="options"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list #membersList>
+    <ion-list-header>
+      <ion-label [hidden]="members.length > 0">Lista je prazna.</ion-label>
+      <ion-label [hidden]="members.length === 0">Ukupno: {{ membersTotal }} | Prikazano: {{ membersDisplayed }}</ion-label>
+    </ion-list-header>
+    <ion-item
+      *ngFor="let member of members"
+      [hidden]="members.length === 0"
+      routerLink="/list/{{member.MemberID}}"
+      routerDirection="forward"
+      style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;"
+      [style.border-left]="member.IsActive ? '2px solid green' : '2px solid red'"
+      (click)="setHeaderMemberName(member.FullName); setContentMemberDetails(member);"
+    >
+      <ion-label>
+        <h3 style="font-weight: bold;">{{member.FullName}}</h3>
+        <p>{{ member.DanceGroups }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="10%" (ionInfinite)="onInfiniteScroll($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" #fab>
+    <ion-fab-button (click)="showAddMemberDialog()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>
